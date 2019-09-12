@@ -7,8 +7,9 @@ body {
     margin: 7% 0 0 5%;
     font-family: 'Racing Sans One', cursive;
     font-size: 16px;
-    background-image: url("../../assets/images/strings.jpg")
+    background-image: url("../../assets/images/guitar.jpg");
 }
+    
 
 #container, .startButton h1 {
     width: 62%;

@@ -8,25 +8,25 @@ const quizContainer = document.getElementById("quiz");
 const resultsContainer = document.getElementById("results");
 const submitButton = document.getElementById("submit");
 
+//set timeout
 $("#startButton").on("click", function () {
     $("#startButton").hide();
     quiz();
 })
 
-$("#countDown").hide();
 
-var time = 60;                                                                           //timer
-setInterval(function () {
-    time--;
-    $("#countDown").show();
-    $("#countDown").html("You have a minute-- GO!  :" + time + "sec");
-    if (time === 0) {
-        location.reload();
-    }
-}, 1000)
 
 // quiz function 
 function quiz() {
+    var time = 60;                                                                           //timer
+    setInterval(function () {
+        time--;
+        setTimeout($("#countDown").show(), 10000);
+        $("#countDown").html("You have a minute-- GO!  :" + time + "sec");
+        if (time === 0) {
+            location.reload();
+        }
+    }, 1000)
     const output = [];                                                                 // container for html output
 
     questions.forEach(                                                                 //for each question
@@ -44,7 +44,7 @@ function quiz() {
             }
             output.push(                                                               //add question and answers to output
                 `<div class="question"> ${currentQuestion.question}  </div>
-                    <div class="answers"> ${answers.join("")} </div>`
+                    <div class="answers"> ${answers.join("")} </div> <br>`
             );
             $("#quiz").html(output.join(""));
         }
@@ -130,6 +130,14 @@ const questions = [
     },
 ];
 
+//     if else statements   if correct answer is selected, the    
+
+// if, else if, else   correct incorrect & not answered 
+// .checked to see what radio buttons are checked
+
+
+
+
 function showResults() {
     const answerContainers = quizContainer.querySelectorAll(".answers");                         //container for answers          
     let numbersCorrect = 0;
@@ -145,7 +153,7 @@ function showResults() {
             if (userAnswer === currentQuestion.correctAnswer) {
                 numbersCorrect++;                                                                   //add correct and incorrect answers to score
             }
-            else
+            else if
                 (userAnswer != currentQuestion.correctAnswer)
             numbersIncorrect++
             $("#results").html(numbersCorrect);
