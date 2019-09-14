@@ -4,9 +4,9 @@ var startButton;
 
 
 
-const quizContainer = document.getElementById("quiz");
-const resultsContainer = document.getElementById("results");
-const submitButton = document.getElementById("submit");
+let quizContainer = document.getElementById("quiz");
+let resultsContainer = document.getElementById("results");
+let submitButton = document.getElementById("submit");
 
 //set timeout
 $("#startButton").on("click", function () {
@@ -14,20 +14,19 @@ $("#startButton").on("click", function () {
     quiz();
 })
 
-
-
 // quiz function 
 function quiz() {
     var time = 60;                                                                           //timer
     setInterval(function () {
         time--;
-        setTimeout($("#countDown").show(), 10000);
-        $("#countDown").html("You have a minute-- GO!  :" + time + "sec");
+        $("#countDown").html("You have a minute- GO!  :" + time + "sec");
         if (time === 0) {
+            $("#countDown").html("Sorry, time's up!");
             location.reload();
         }
     }, 1000)
-    const output = [];                                                                 // container for html output
+
+    var output = [];                                                                 // container for html output
 
     questions.forEach(                                                                 //for each question
         (currentQuestion, questionNumber) => {
@@ -136,30 +135,24 @@ const questions = [
 // .checked to see what radio buttons are checked
 
 
-
-
 function showResults() {
-    let answerContainer = quizContainer.querySelectorAll(".answers");                         //container for answers          
-    let numbersCorrect = 0;
-    let numbersIncorrect = 0;
-    var userAnswers = results.children("input:checked");
-    for (let i = 0; i < questions.length; i++) {                                                         //variable for answers
-        // questions.forEach((currentQuestion, questionNumber) => {                                 //for each question get the selected answer
-        let answerContainer = answerContainer[questionNumber];
-        let selector = `input[name=question${questionNumber}]:checked`;
-        let userAnswer = (answerContainer.querySelector(selector) || {}).value;
+    var resultsContainer = quizContainer.querySelectorAll(".answers");                         //container for answers          
+    var userAnswers;
+    var numbersCorrect = 0;
+    var numbersIncorrect = 0;
 
-        if (userAnswer[i] === questions[i].correctAnswer) {
-            numbersCorrect++;                                                                   //add correct and incorrect answers to score
-        }
-        else
+    for (var i = 0; i < questions.length; i++) {
+
+        userAnswers = (resulsContainer[i].querySelector(`input['name = question'+i+]:checked`) || {}).value;
+        if (userAnswers === questions[i].correctAnswer) {
+            numbersCorrect++;
+
+        } else {
             numbersIncorrect++
+        }
+        console.log(userAnswers);
+        $("#results").html(numbersCorrect);
+        $("#results").html(numbersIncorrect);
+        $("#submitButton").on("click", showResults());
     }
-    console.log(userAnswer);
-    $("#results").html(numbersIncorrect);
-    $("#results").html(numbersCorrect);
 }
-
-
-$("#submitButton").on("click", showResults()
-)
