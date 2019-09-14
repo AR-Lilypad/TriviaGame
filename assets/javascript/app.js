@@ -31,7 +31,7 @@ function quiz() {
 
     questions.forEach(                                                                 //for each question
         (currentQuestion, questionNumber) => {
-            const answers = [];
+            let answers = [];
 
             for (letter in currentQuestion.answers) {                                 //for each available answer
                 answers.push(                                                         //add radio button
@@ -139,27 +139,27 @@ const questions = [
 
 
 function showResults() {
-    const answerContainers = quizContainer.querySelectorAll(".answers");                         //container for answers          
+    let answerContainer = quizContainer.querySelectorAll(".answers");                         //container for answers          
     let numbersCorrect = 0;
-    let numbersIncorrect = 0;                                                             //variable for answers
-    questions.forEach((currentQuestion, questionNumber) => {                                 //for each question get the selected answer
-        const answerContainer = answerContainer[questionNumber];
-        const selector = `input[name=question${questionNumber}]:checked`;
-        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-    })
+    let numbersIncorrect = 0;
+    var userAnswers = results.children("input:checked");
+    for (let i = 0; i < questions.length; i++) {                                                         //variable for answers
+        // questions.forEach((currentQuestion, questionNumber) => {                                 //for each question get the selected answer
+        let answerContainer = answerContainer[questionNumber];
+        let selector = `input[name=question${questionNumber}]:checked`;
+        let userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-    $("#submitButton").on("click", function () {
-        function checkScore() {
-            if (userAnswer === currentQuestion.correctAnswer) {
-                numbersCorrect++;                                                                   //add correct and incorrect answers to score
-            }
-            else if
-                (userAnswer != currentQuestion.correctAnswer)
-            numbersIncorrect++
-            $("#results").html(numbersCorrect);
-            $("#results").html(numbersIncorrect);
-            showResults();
+        if (userAnswer[i] === questions[i].correctAnswer) {
+            numbersCorrect++;                                                                   //add correct and incorrect answers to score
         }
-    })
-
+        else
+            numbersIncorrect++
+    }
+    console.log(userAnswer);
+    $("#results").html(numbersIncorrect);
+    $("#results").html(numbersCorrect);
 }
+
+
+$("#submitButton").on("click", showResults()
+)
