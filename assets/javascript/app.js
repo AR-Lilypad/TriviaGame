@@ -8,6 +8,7 @@ let quizContainer = document.getElementById("quiz");
 let resultsContainer = document.getElementById("results");
 let submitButton = document.getElementById("submit");
 
+
 //set timeout
 $("#startButton").on("click", function () {
     $("#startButton").hide();
@@ -30,8 +31,8 @@ function quiz() {
 
     questions.forEach(                                                                 //for each question
         (currentQuestion, questionNumber) => {
+            
             let answers = [];
-
             for (letter in currentQuestion.answers) {                                 //for each available answer
                 answers.push(                                                         //add radio button
                     `<label>
@@ -135,24 +136,24 @@ const questions = [
 // .checked to see what radio buttons are checked
 
 
-function showResults() {
-    var resultsContainer = quizContainer.querySelectorAll(".answers");                         //container for answers          
+function showResults() {                        //container for answers          
     var userAnswers;
     var numbersCorrect = 0;
     var numbersIncorrect = 0;
+   
 
     for (var i = 0; i < questions.length; i++) {
 
-        userAnswers = (resulsContainer[i].querySelector(`input['name = question'+i+]:checked`) || {}).value;
+        userAnswers = document.querySelectorAll(`input[name='question${i}']:checked]`)
         if (userAnswers === questions[i].correctAnswer) {
             numbersCorrect++;
-
         } else {
             numbersIncorrect++
         }
-        console.log(userAnswers);
         $("#results").html(numbersCorrect);
         $("#results").html(numbersIncorrect);
-        $("#submitButton").on("click", showResults());
+        
     }
 }
+
+$("#submit").on("click", showResults);
