@@ -143,8 +143,8 @@ function showResults() {                        //container for answers
    
 
     for (var i = 0; i < questions.length; i++) {
-
-        userAnswers = document.querySelectorAll(`input[name='question${i}']:checked]`)
+        
+        userAnswers = document.querySelectorAll(`input[name="question${i}"]:checked`)
         if (userAnswers === questions[i].correctAnswer) {
             numbersCorrect++;
         } else {
@@ -157,3 +157,4 @@ function showResults() {                        //container for answers
 }
 
 $("#submit").on("click", showResults);
+//original event handler userAnswers = (resulsContainer[i].querySelector(`input['name = question'+i+]:checked`) || {}).value;
