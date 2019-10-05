@@ -31,7 +31,7 @@ function quiz() {
 
     questions.forEach(                                                                 //for each question
         (currentQuestion, questionNumber) => {
-            
+
             let answers = [];
             for (letter in currentQuestion.answers) {                                 //for each available answer
                 answers.push(                                                         //add radio button
@@ -140,19 +140,22 @@ function showResults() {                        //container for answers
     var userAnswers;
     var numbersCorrect = 0;
     var numbersIncorrect = 0;
-   
+
 
     for (var i = 0; i < questions.length; i++) {
-        
+
         userAnswers = document.querySelectorAll(`input[name="question${i}"]:checked`)
-        if (userAnswers === questions[i].correctAnswer) {
-            numbersCorrect++;
-        } else {
-            numbersIncorrect++
+        if (userAnswers === questions[i]) {
+            userAnswers
+            if (userAnswers === questions[i].correctAnswer) {
+                numbersCorrect++;
+            } else {
+                numbersIncorrect++
+            }
+            // $("#results").html("You answered: " + useranswers + "out of 7questions");
+            $("#results").html("You answered: " + numbersCorrect);
+            $("#results").html("You answered: " + numbersIncorrect);
         }
-        $("#results").html(numbersCorrect);
-        $("#results").html(numbersIncorrect);
-        
     }
 }
 
