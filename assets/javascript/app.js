@@ -8,10 +8,12 @@ let quizContainer = document.getElementById("quiz");
 let resultsContainer = document.getElementById("results");
 let submitButton = document.getElementById("submit");
 
+$("#submit").hide();
 
-//set timeout
+//load page & hide button after start button clicked
 $("#startButton").on("click", function () {
     $("#startButton").hide();
+    $("#submit").show();
     quiz();
 })
 
@@ -22,7 +24,7 @@ function quiz() {
         time--;
         $("#countDown").html("You have a minute- GO!  :" + time + "sec");
         if (time === 0) {
-            $("#countDown").html("Sorry, time's up!");
+            window.alert("Sorry, time's up! Start over?");
             location.reload();
         }
     }, 1000)
@@ -43,8 +45,10 @@ function quiz() {
                 );
             }
             output.push(                                                               //add question and answers to output
-                `<div class="question"> ${currentQuestion.question}  </div>
-                    <div class="answers"> ${answers.join("")} </div> <br>`
+                //made each question a form
+                `<form name="${questionNumber}">
+                <div class="question" id="${questionNumber}"> ${currentQuestion.question}  </div>
+                <div class="answers"> ${answers.join("")} </div></form> <br>`
             );
             $("#quiz").html(output.join(""));
         }
@@ -136,26 +140,27 @@ const questions = [
 // .checked to see what radio buttons are checked
 
 
-function showResults() {                        //container for answers          
+function showResults() {
     var userAnswers;
     var numbersCorrect = 0;
     var numbersIncorrect = 0;
 
-
     for (var i = 0; i < questions.length; i++) {
 
-        userAnswers = document.querySelectorAll(`input[name="question${i}"]:checked`)
-        if (userAnswers === questions[i]) {
-            userAnswers
-            if (userAnswers === questions[i].correctAnswer) {
-                numbersCorrect++;
-            } else {
-                numbersIncorrect++
-            }
-            // $("#results").html("You answered: " + useranswers + "out of 7questions");
-            $("#results").html("You answered: " + numbersCorrect);
-            $("#results").html("You answered: " + numbersIncorrect);
+ // *** Changed the userAnswers = line to jquery
+        // userAnswers = document.querySelectorAll(`input[name="question${i}"]:checked`)
+        userAnswers = $(`input[name="question${i}"]:checked`).val()
+        console.log(`Question ${i}: ${userAnswers}`);
+        if (userAnswers === questions[i].correctAnswer) {
+            numbersCorrect++;
+        } else {
+            numbersIncorrect++
         }
+
+        // *** Added correct and incorrect string to the html parameters
+        $("#results").html("Correct:  " +  numbersCorrect +  " Incorrect: " + numbersIncorrect);
+        // $("#results").html("Incorrect: " + numbersIncorrect);
+        
     }
 }
 
