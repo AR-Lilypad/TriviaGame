@@ -158,8 +158,8 @@ function showResults() {
         }
 
         // *** Added correct and incorrect string to the html parameters
-        $("#results").html("Correct:  " +  numbersCorrect +  " Incorrect: " + numbersIncorrect);
-        // $("#results").html("Incorrect: " + numbersIncorrect);
+        $("#results").html("<h4>Correct:  </h4>" +  numbersCorrect);  
+         $("#results").append("<h4>Incorrect: </h4>" + numbersIncorrect);
         
     }
 }
